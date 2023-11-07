@@ -45,11 +45,14 @@ server.addHook('onClose', (_, done) => {
 // Start listening
 // Read the PORT from the .env file. Defaults to 3003.
 server.listen(
-  { port: parseInt(process.env.PORT ?? '3003', 10) },
+  {
+    port: parseInt(process.env.PORT ?? '3003', 10),
+    host: process.env.HOST ?? 'localhost',
+  },
   (err: any) => {
     if (err) {
       server.log.error(err);
       process.exit(1);
     }
-  }
+  },
 );

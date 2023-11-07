@@ -1,0 +1,23 @@
+# Exclude everything
+
+-
+
+# Except for these files
+## Sources
+!src
+
+## Build config
+!build.js
+
+## Dependencies
+!package.json
+!pnpm-lock.yaml
+
+## Typescript config
+!tsconfig.json
+!tsconfig.eslint.json
+
+## Prettier, ESLint
+!.prettierignore
+!.prettierrc.js
+!.eslintrc.js

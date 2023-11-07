@@ -14,7 +14,7 @@ const options: AppOptions = {};
 
 const app: FastifyPluginAsync<AppOptions> = async (
   fastify,
-  _opts
+  _opts,
 ): Promise<void> => {
   // This loads all plugins defined in plugins
   // those should be support plugins that are reused
