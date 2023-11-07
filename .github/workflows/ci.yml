@@ -1,4 +1,4 @@
-name: Build, Link, and Test
+name: Build, Lint, and Test
 
 on:
   workflow_dispatch:
@@ -18,7 +18,12 @@ jobs:
       matrix:
         node-version: [20.x, 21.x]
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8.10.2
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
