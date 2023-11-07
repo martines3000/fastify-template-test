@@ -7,10 +7,14 @@ await build({
   outdir: 'dist',
   bundle: false,
   treeShaking: true,
+  minify: true,
   platform: 'node',
   format: 'esm',
   target: 'es2022',
   tsconfig: 'tsconfig.json',
+  define: {
+    'import.meta.vitest': 'undefined',
+  },
 });
 
 console.log('Finished building service...');

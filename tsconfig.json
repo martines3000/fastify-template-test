@@ -6,7 +6,8 @@
     "module": "NodeNext",
     "target": "ES2022",
     "esModuleInterop": true,
-    "skipLibCheck": false
+    "skipLibCheck": true,
+    "types": ["node", "vitest/importMeta"]
   },
   "include": ["src/**/*.ts"]
 }
