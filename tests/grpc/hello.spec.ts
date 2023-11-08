@@ -8,9 +8,13 @@ import {
 } from '@connectrpc/connect';
 import { ExampleService } from '@buf/martines3000_proto-example.connectrpc_es/martines3000/example/v1/example_connect.js';
 import { createConnectTransport } from '@connectrpc/connect-node';
+import {
+  HelloRequest,
+  HelloResponse,
+} from '@buf/martines3000_proto-example.bufbuild_es/martines3000/example/v1/example_pb.js';
 import { HttpResponse, http } from 'msw';
-import { HelloResponse } from '@buf/martines3000_proto-example.bufbuild_es/martines3000/example/v1/example_pb.js';
 import { app, options } from '../../src/app.js';
+import { grpcService } from './utils.js';
 
 describe('[gRPC]: hello', () => {
   let server: FastifyInstance;
@@ -21,7 +25,7 @@ describe('[gRPC]: hello', () => {
   beforeAll(async () => {
     server = Fastify({
       logger: {
-        level: 'trace',
+        level: 'error',
         // We want to use pino-pretty only if there is a human watching this,
         // otherwise we log as newline-delimited JSON.
         transport: { target: 'pino-pretty' },
@@ -31,7 +35,7 @@ describe('[gRPC]: hello', () => {
     await server.listen({ port: 3003 });
 
     mswServer = setupServer();
-    mswServer.listen({ onUnhandledRequest: 'error' });
+    mswServer.listen({ onUnhandledRequest: 'bypass' });
 
     transport = createConnectTransport({
       baseUrl: `http://127.0.0.1:3003/grpc`,
@@ -57,7 +61,7 @@ describe('[gRPC]: hello', () => {
         {
           message: 'Welcome alice!',
         },
-        { status: 200 },
+        { status: 200 } as any,
       ),
     );
 
@@ -68,20 +72,21 @@ describe('[gRPC]: hello', () => {
     expect.assertions(1);
   });
 
-  it.skip('mock grpc example', async () => {
-    const handler = http.post(
-      'http://127.0.0.1:3003/grpc/martines3000.example.v1.ExampleService/Hello',
-      // eslint-disable-next-line @typescript-eslint/require-await
-      async (request) => {
-        console.log('request', request);
-        return HttpResponse.arrayBuffer(
-          new HelloResponse({ message: 'Does not work' }).toBinary(),
-          { status: 200 },
-        );
+  it('mock grpc example', async () => {
+    const handler = grpcService(
+      ExampleService,
+      {
+        baseUrl: 'http://127.0.0.1:3003/grpc',
+      },
+      {
+        hello: (_req: HelloRequest) =>
+          new HelloResponse({
+            message: 'Welcome alice!',
+          }),
       },
     );
 
-    mswServer.use(handler);
+    mswServer.use(...handler);
 
     const res = await client.hello({ name: 'remote-grpc' });
     expect(res.toJson()).toEqual({ message: 'Welcome alice!' });

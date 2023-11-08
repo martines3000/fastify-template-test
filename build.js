@@ -11,7 +11,7 @@ await build({
   platform: 'node',
   format: 'esm',
   target: 'es2022',
-  tsconfig: 'tsconfig.json',
+  tsconfig: 'tsconfig.build.json',
   define: {
     'import.meta.vitest': 'undefined',
   },

@@ -15,7 +15,7 @@ describe('[REST]: example', () => {
     await server.listen();
 
     mswServer = setupServer();
-    mswServer.listen();
+    mswServer.listen({ onUnhandledRequest: 'bypass' });
   });
 
   afterAll(async () => {
@@ -49,7 +49,7 @@ describe('[REST]: example', () => {
         {
           alive: false,
         },
-        { status: 200 },
+        { status: 200 } as any, // TODO: Remove this cast when this PR is merged and a new version of @types/node is released: https://github.com/DefinitelyTyped/DefinitelyTyped/pull/67341
       ),
     );
 

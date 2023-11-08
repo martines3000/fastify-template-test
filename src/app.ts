@@ -36,7 +36,7 @@ const app: FastifyPluginAsync<AppOptions> = async (
   // Load gRPC routes
   await fastify.register(fastifyConnectPlugin, {
     routes,
-    connect: true,
+    grpc: true,
     prefix: '/grpc',
   });
 };

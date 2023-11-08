@@ -7,7 +7,7 @@
     "target": "ES2022",
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "types": ["node", "vitest/importMeta"]
+    "types": ["node", "vitest/importMeta", "msw"]
   },
-  "include": ["src/**/*.ts"]
+  "include": ["src/**/*.ts", "tests/**/*.ts"]
 }
