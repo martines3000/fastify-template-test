@@ -2,6 +2,8 @@ import * as path from 'path';
 import { fileURLToPath } from 'url';
 import AutoLoad, { AutoloadPluginOptions } from '@fastify/autoload';
 import { FastifyPluginAsync, FastifyServerOptions } from 'fastify';
+import { fastifyConnectPlugin } from '@connectrpc/connect-fastify';
+import { routes } from './grpc/router.js';
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -24,11 +26,18 @@ const app: FastifyPluginAsync<AppOptions> = async (
   //   forceESM: true,
   // });
 
-  // This loads all plugins defined in routes
-  // define your routes in one of these
+  // This loads all rest routes defined in rest
   await fastify.register(AutoLoad, {
-    dir: path.join(dirname, 'routes'),
+    dir: path.join(dirname, 'rest'),
     forceESM: true,
+    options: { prefix: '/rest' },
+  });
+
+  // Load gRPC routes
+  await fastify.register(fastifyConnectPlugin, {
+    routes,
+    connect: true,
+    prefix: '/grpc',
   });
 };
 

@@ -3,9 +3,9 @@ import { describe, it, beforeAll, afterAll, expect } from 'vitest';
 import supertest from 'supertest';
 import { setupServer, SetupServer } from 'msw/node';
 import { http, HttpResponse } from 'msw';
-import { app, options } from '../src/app';
+import { app, options } from '../../src/app.js';
 
-describe('example', () => {
+describe('[REST]: example', () => {
   let server: FastifyInstance;
   let mswServer: SetupServer;
 
@@ -25,20 +25,22 @@ describe('example', () => {
 
   it('example 1', async () => {
     const response = await supertest(server.server)
-      .get('/example')
+      .get('/rest/example')
       .expect(200)
       .expect('Content-Type', 'application/json; charset=utf-8');
 
     expect(response.body).toEqual({ result: 'example' });
+    expect.assertions(1);
   });
 
   it('example 2', async () => {
     const response = await supertest(server.server)
-      .get('/example/fetch')
+      .get('/rest/example/fetch')
       .expect(200)
       .expect('Content-Type', 'application/json; charset=utf-8');
 
     expect(response.body).toEqual({ alive: true });
+    expect.assertions(1);
   });
 
   it('mock http example', async () => {
@@ -54,10 +56,11 @@ describe('example', () => {
     mswServer.use(handler);
 
     const response = await supertest(server.server)
-      .get('/example/fetch')
+      .get('/rest/example/fetch')
       .expect(200)
       .expect('Content-Type', 'application/json; charset=utf-8');
 
     expect(response.body).toEqual({ alive: false });
+    expect.assertions(1);
   });
 });

@@ -28,6 +28,8 @@ const server = Fastify(opts);
 // Register your application as a normal plugin.
 await server.register(app, options);
 
+console.log(server.printRoutes());
+
 // Exits process gracefully if possible
 const closeListeners = closeWithGrace({ delay: 500 }, (async ({ err }) => {
   if (err) {
@@ -47,7 +49,7 @@ server.addHook('onClose', (_, done) => {
 server.listen(
   {
     port: parseInt(process.env.PORT ?? '3003', 10),
-    host: process.env.HOST ?? 'localhost',
+    host: process.env.HOST ?? '127.0.0.1',
   },
   (err: any) => {
     if (err) {

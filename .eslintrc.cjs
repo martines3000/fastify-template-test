@@ -44,6 +44,9 @@ module.exports = {
     // We don't use this rule because it doesn't allow us to use `nullish coalescing`
     '@typescript-eslint/prefer-nullish-coalescing': 'off',
     'unused-imports/no-unused-imports': 'error',
+    // We ignore package imports, because protobuf packages are imported
+    // using the `.js` extension.
+    'import/extensions': ['error', 'ignorePackages'],
     // We don't use this rule because default exports are not better than named
     // exports. We should use named exports whenever possible. This way we don't
     // import the same item with different names in different files. This way it's
