@@ -25,5 +25,6 @@
 
 - Buf remote packages [docs](https://buf.build/docs/bsr/remote-packages/npm)
 - A token is needed for private packages, see [docs](https://buf.build/docs/bsr/remote-packages/npm#private-packages)
-- Syntax for installing packages `npm install @buf/{moduleOwner}_{moduleName}.{pluginOwner}_{pluginName}`, see [docs](https://buf.build/docs/bsr/remote-packages/npm#using-the-npm-registry)
+- Syntax for installing packages, see [docs](https://buf.build/docs/bsr/remote-packages/npm#using-the-npm-registry):
+  - `npm install @buf/{moduleOwner}_{moduleName}.{pluginOwner}_{pluginName}`
 - Installing a specific commit append `@commit-{commit_hash}`, see [docs](https://buf.build/docs/bsr/remote-packages/npm#commit)
