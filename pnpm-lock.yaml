@@ -35,6 +35,9 @@ dependencies:
   '@fastify/sensible':
     specifier: ^5.5.0
     version: 5.5.0
+  '@fastify/under-pressure':
+    specifier: ^8.3.0
+    version: 8.3.0
   close-with-grace:
     specifier: ^1.2.0
     version: 1.2.0
@@ -933,6 +936,13 @@ packages:
       http-errors: 2.0.0
       type-is: 1.6.18
       vary: 1.1.2
+    dev: false
+
+  /@fastify/under-pressure@8.3.0:
+    resolution: {integrity: sha512-ap1EePB9vHm8uQLM0nnaOeIMBLooNmAMTnccavBRwaXmu+acJFuSEQRVdMGRkW6viFDhdo5RGTcHzMBQyrucEA==}
+    dependencies:
+      '@fastify/error': 3.4.0
+      fastify-plugin: 4.5.1
     dev: false
 
   /@humanwhocodes/config-array@0.11.13:
