@@ -1,5 +1,14 @@
 # Example template
 
+## Scripts
+
+- `pnpm build` - Build the API
+- `pnpm dev` - Start the API in development mode (runs `tsc` and `fastify start` concurrently)
+- `pnpm start` - Start the API in production mode
+- `pnpm lint` - Lint the API
+- `pnpm lint:fix` - Fix linting errors
+- `pnpm test` - Run all tests
+
 ## Build information
 
 - [esbuild](https://esbuild.github.io/) - Used for building the API
