@@ -52,9 +52,3 @@ ENV HOST 0.0.0.0
 ENV PORT 3003
 
 CMD [ "node", 'dist/server.js' ]
-
-
-
-
-
-
