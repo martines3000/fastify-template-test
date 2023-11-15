@@ -11,8 +11,10 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "build": "node build.js",
-    "dev": "pnpm build && concurrently -k -p \"[{name}]\" -n \"Typescript,App\" -c \"yellow.bold,cyan.bold\" \"pnpm watch:tsc\" \"pnpm dev:start\"",
+    "build": "concurrently -c \"auto\" --names \"esbuild,tsc\" \"pnpm build:esbuild\" \"pnpm build:type-check\"",
+    "build:esbuild": "node build.js",
+    "build:type-check": "tsc -p tsconfig.build.json --noEmit",
+    "dev": "concurrently -c \"auto\" --names \"tsc,esbuild,app\" \"pnpm watch:tsc\" \"pnpm watch:esbuild\" \"pnpm dev:start\"",
     "dev:start": "fastify start --ignore-watch=.ts$ -p 3003 -w -l info -P dist/app.js",
     "lint": "eslint . --ext .js,.ts && prettier . --check && tsc -p tsconfig.json --noEmit --incremental false",
     "lint:fix": "eslint . --ext .js,.ts --fix && prettier . --write && tsc -p tsconfig.json --noEmit --incremental false",
@@ -20,7 +22,7 @@
     "start": "node dist/server.js",
     "test": "cross-env NODE_NO_WARNINGS=1 vitest",
     "watch:esbuild": "esbuild --watch --platform=node --target=es2022 --outdir=dist src/*.ts src/**/*.ts src/**/**/*.ts",
-    "watch:tsc": "tsc -w -p tsconfig.json"
+    "watch:tsc": "tsc -w --noEmit -p tsconfig.build.json"
   },
   "dependencies": {
     "@buf/martines3000_proto-example.bufbuild_es": "1.4.2-20231107160053-20658d92a322.1",
